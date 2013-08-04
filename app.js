@@ -7,9 +7,11 @@ var express = require('express')
   , routes = require('./routes')
   , user = require('./routes/user')
   , http = require('http')
-  , path = require('path');
+  , path = require('path')
+  , engine = require('ejs-locals');
 
 var app = express();
+app.engine('ejs', engine);
 
 // all environments
 app.set('port', process.env.PORT || 3000);
