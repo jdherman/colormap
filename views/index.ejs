@@ -13,6 +13,16 @@
 
 <script src="javascripts/colormap-client.js"></script>
 <script>
-  window.onload = function() {colormapPlot();};
+  window.onload = function() {
+    // Configure and create Raphael object
+    var W = 500,
+        H = 350,
+        r = Raphael("raph-holder", W, H);
+
+    Blue = new colormapLine(r, 5, "rgb(0,0,255)");
+    Red = new colormapLine(r, 5, "rgb(255,0,0)");
+    Green = new colormapLine(r, 5, "rgb(0,255,0)");
+
+  };
 </script>
     
