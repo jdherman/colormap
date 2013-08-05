@@ -43,6 +43,4 @@ var colormapLine = function (r, numButtons, color) {
     }
     
     this.drawPath();
-
-    return this;
 };
