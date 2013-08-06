@@ -6,22 +6,60 @@
   <p class="lead">Pin a fixed-height footer to the bottom of the viewport in desktop browsers with this custom HTML and CSS. A fixed navbar has been added within <code>#wrap</code> with <code>padding-top: 60px;</code> on the <code>.container</code>.</p>
   
   <div class="row">
-    <div id="raph-holder" class="col-lg-8"></div>
+    <div id="raph-holder" class="col-lg-6"></div>
+    <div id="raph-cbar-holder" class="col-lg-1"></div>
     <div class="col-lg-4">Download</div>
   </div>
 </div>
 
-<script src="javascripts/colormap-client.js"></script>
+<script src="javascripts/colormapLine.js"></script>
+<script src="javascripts/drawColorbar.js"></script>
 <script>
   window.onload = function() {
     // Configure and create Raphael object
-    var W = 500,
+    var W = 460,
         H = 350,
         r = Raphael("raph-holder", W, H);
 
-    Blue = new colormapLine(r, 5, "rgb(0,0,255)");
+    graph = r.rect(5, 0, 450, H, 10).attr({fill: '#eee', stroke: '#999', 'stroke-width': 1});
+
+    gridp = "M120,0L120,350M230,0L230,350M340,0L340,350M5,88L455,88M5,175L455,175M5,263L455,263"
+    gridPath = r.path(gridp).attr({stroke: '#bbb'});
+
     Red = new colormapLine(r, 5, "rgb(255,0,0)");
     Green = new colormapLine(r, 5, "rgb(0,255,0)");
+    Blue = new colormapLine(r, 5, "rgb(0,0,255)");
+    cmapLines = [Red, Green, Blue];
+
+    var cbarW = 50,
+        cbarH = 350,
+        numColors = 50,
+        rcbar = Raphael("raph-cbar-holder", cbarW, cbarH);
+
+    cbar = rcbar.rect(0,0,cbarW,cbarH).attr({stroke: '#666'});
+
+    // Get the colorbar rectangles and set the drag events to update.
+
+    colorRects = initColorbar(r, rcbar, numColors, cmapLines);
+
+    var updateCBar = function(numColors, colorRects) {
+          
+      RIV = Red.getIntensityValues(numColors);
+      GIV = Green.getIntensityValues(numColors);
+      BIV = Blue.getIntensityValues(numColors);
+
+      for(var color = 0; color <= numColors; color++) {
+          hexcolor = Raphael.rgb(RIV[color], GIV[color], BIV[color]);
+          colorRects[color].attr({fill: hexcolor, "stroke-width": 0});
+      }
+    }
+
+    for(var i = 0; i < cmapLines.length; i++) {
+      for(var j = 0; j < cmapLines[i].buttons.items.length; j++) {
+        //cmapLines[i].buttons.items[j].drag(updateCBar(numColors, colorRects));
+      }
+    }
+
 
   };
 </script>
