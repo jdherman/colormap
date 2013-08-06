@@ -26,10 +26,10 @@
     gridp = "M120,0L120,350M230,0L230,350M340,0L340,350M5,88L455,88M5,175L455,175M5,263L455,263"
     gridPath = r.path(gridp).attr({stroke: '#bbb'});
 
-    Red = new colormapLine(r, 5, "rgb(255,0,0)");
-    Green = new colormapLine(r, 5, "rgb(0,255,0)");
-    Blue = new colormapLine(r, 5, "rgb(0,0,255)");
-    cmapLines = [Red, Green, Blue];
+    var Red = new colormapLine(r, 5, "rgb(255,0,0)");
+    var Green = new colormapLine(r, 5, "rgb(0,255,0)");
+    var Blue = new colormapLine(r, 5, "rgb(0,0,255)");
+    var cmapLines = [Red, Green, Blue];
 
     var cbarW = 50,
         cbarH = 350,
@@ -40,10 +40,10 @@
 
     // Get the colorbar rectangles and set the drag events to update.
 
-    colorRects = initColorbar(r, rcbar, numColors, cmapLines);
+    var colorRects = initColorbar(r, rcbar, numColors, cmapLines);
 
-    var updateCBar = function(numColors, colorRects) {
-          
+    var updateCBar = function() {
+
       RIV = Red.getIntensityValues(numColors);
       GIV = Green.getIntensityValues(numColors);
       BIV = Blue.getIntensityValues(numColors);
@@ -52,11 +52,11 @@
           hexcolor = Raphael.rgb(RIV[color], GIV[color], BIV[color]);
           colorRects[color].attr({fill: hexcolor, "stroke-width": 0});
       }
-    }
+    };
 
     for(var i = 0; i < cmapLines.length; i++) {
       for(var j = 0; j < cmapLines[i].buttons.items.length; j++) {
-        //cmapLines[i].buttons.items[j].drag(updateCBar(numColors, colorRects));
+        cmapLines[i].buttons.items[j].drag(function (dx,dy) { updateCBar();});
       }
     }
 
