@@ -3,13 +3,36 @@
 <!-- Begin page content -->
 <div class="container">
   <br/>
-  <p class="lead">Pin a fixed-height footer to the bottom of the viewport in desktop browsers with this custom HTML and CSS. A fixed navbar has been added within <code>#wrap</code> with <code>padding-top: 60px;</code> on the <code>.container</code>.</p>
+  <p class="lead">Create a custom colormap by dragging points on the RGB intensity curves.</p>
   
   <div class="row">
-    <div id="raph-holder" class="col-lg-6"></div>
+    
+    <div class="col-lg-6">
+      <div id="raph-holder"></div>
+      <div id="plot-control-buttons">
+        Bring to Front: 
+        <button id="rfrontbutton" class="movetofront" style="color:red">R</button>
+        <button id="gfrontbutton" class="movetofront" style="color:green">G</button>
+        <button id="bfrontbutton" class="movetofront" style="color:blue">B</button>
+      </div> 
+    </div>
+
     <div id="raph-cbar-holder" class="col-lg-1"></div>
-    <div class="col-lg-4">Download</div>
+    
+    <div id="dl-sidebar" class="col-lg-4">
+      <p class="lead">Download your colormap</p>
+      <p>Choose N colors </p>
+      <p>Save to Gallery? Name</p>
+      <p>Download Button (.txt)</p>
+      <p>Usage</p>
+<pre>% Matlab
+importdata...
+# Matplotlib
+something else
+</pre>
+    </div>
   </div>
+
 </div>
 
 <script src="javascripts/colormapLine.js"></script>
@@ -33,14 +56,12 @@
 
     var cbarW = 50,
         cbarH = 350,
-        numColors = 50,
+        numColors = 175,
         rcbar = Raphael("raph-cbar-holder", cbarW, cbarH);
 
-    cbar = rcbar.rect(0,0,cbarW,cbarH).attr({stroke: '#666'});
-
     // Get the colorbar rectangles and set the drag events to update.
-
     var colorRects = initColorbar(r, rcbar, numColors, cmapLines);
+    cbarRect = rcbar.rect(0,0,cbarW,cbarH).attr({stroke: '#666'});
 
     var updateCBar = function() {
 
@@ -52,6 +73,9 @@
           hexcolor = Raphael.rgb(RIV[color], GIV[color], BIV[color]);
           colorRects[color].attr({fill: hexcolor, "stroke-width": 0});
       }
+
+      cbarRect.toFront();
+      cbarRect.attr({fill: "90-#fff-#f00:20-#000"})
     };
 
     for(var i = 0; i < cmapLines.length; i++) {
@@ -59,6 +83,19 @@
         cmapLines[i].buttons.items[j].drag(function (dx,dy) { updateCBar();});
       }
     }
+
+    $("#rfrontbutton").click(function(){
+      Red.buttons.toFront();
+      Red.path.toFront();
+    });
+    $("#gfrontbutton").click(function(){
+      Green.buttons.toFront();
+      Green.path.toFront();
+    });
+    $("#bfrontbutton").click(function(){
+      Blue.buttons.toFront();
+      Blue.path.toFront();
+    });
 
 
   };
