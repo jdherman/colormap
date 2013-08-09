@@ -10,10 +10,18 @@
     <div class="col-lg-6">
       <div id="raph-holder"></div>
       <div id="plot-control-buttons">
-        Bring to Front: 
+        <span>Bring to Front:</span> 
         <button id="rfrontbutton" class="movetofront" style="color:red">R</button>
         <button id="gfrontbutton" class="movetofront" style="color:green">G</button>
         <button id="bfrontbutton" class="movetofront" style="color:blue">B</button>
+
+        <span style="margin-left:12px">Swap:</span>
+        <button id="rgswapbutton" class="swap"><span style="color:red">R</span><span style="color:green">G</span></button>
+        <button id="rbswapbutton" class="swap"><span style="color:red">R</span><span style="color:blue">B</span></button>
+        <button id="gbswapbutton" class="swap"><span style="color:green">G</span><span style="color:blue">B</span></button>
+
+        <span style="margin-left:12px">Flip:</span>
+        <button id="flipbutton"><span class="glyphicon glyphicon-sort" style="color: #555"></span></button>
       </div> 
     </div>
 
@@ -96,7 +104,46 @@ something else
       Blue.buttons.toFront();
       Blue.path.toFront();
     });
+    $("#rgswapbutton").click(function() {
+      swapLines(Red, Green);
+    });
+    $("#rbswapbutton").click(function() {
+      swapLines(Red, Blue);
+    });
+    $("#gbswapbutton").click(function() {
+      swapLines(Green, Blue);
+    });
+    $("#flipbutton").click(function() {
+      flipLine(Red); flipLine(Green); flipLine(Blue);
+    });
 
+    // Swap two color curves
+    var swapLines = function(Line1, Line2) {
+  
+      var tempVal = 0;
+      for(var i = 0; i < Line1.buttons.items.length; i++) {
+        tempVal = Line1.buttons.items[i].attr('cy');
+        Line1.buttons.items[i].attr({cy: Line2.buttons.items[i].attr('cy')})
+        Line2.buttons.items[i].attr({cy: tempVal});
+      }
+
+      Line1.drawPath();
+      Line2.drawPath();
+      updateCBar();
+    };
+
+    // Flip a single color curve
+    var flipLine = function(Line1) {
+      var tempVal = 0;
+      var endIdx = Line1.buttons.items.length-1;
+      for(var i = 0; i < endIdx/2; i++) {
+        tempVal = Line1.buttons.items[i].attr('cy');
+        Line1.buttons.items[i].attr({cy: Line1.buttons.items[endIdx-i].attr('cy')})
+        Line1.buttons.items[endIdx-i].attr({cy: tempVal});
+      }
+      Line1.drawPath();
+      updateCBar();
+    };
 
   };
 </script>
