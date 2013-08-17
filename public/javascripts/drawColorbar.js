@@ -17,7 +17,7 @@ var initColorbar = function(r, rcbar, numColors, cmapLines) {
 
       hexcolor = Raphael.rgb(RIV[color], GIV[color], BIV[color]);
 
-      colorRects[color] = rcbar.rect(0, cbarH-(color+1)*cbarH/numColors, cbarW, cbarH/numColors)
+      colorRects[color] = rcbar.rect(color*cbarW/numColors, 0, cbarW/numColors, cbarH)
       .attr({fill: hexcolor, "stroke-width": 0});
   }
 

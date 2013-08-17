@@ -8,6 +8,7 @@ a {
 }
 
 .navbar {
+  background: #eee;
   background: url('/images/light_noise_diagonal.png') repeat;
   border-bottom: 1px solid #dedede;
 }
@@ -24,13 +25,19 @@ a {
   font-size: 14px;
 }
 
+#raph-cbar-holder {
+  margin-left: 5px;
+}
+
 #dl-sidebar {
   background: #eee;
+  background: url('/images/light_noise_diagonal.png') repeat;
   border: 1px solid #999;
   -moz-border-radius: 10px;
   border-radius: 10px;
   padding: 15px;
-  height: 350px;
+  height: 405px;
+  margin-left: 20px;
 }
 
 #plot-control-buttons {

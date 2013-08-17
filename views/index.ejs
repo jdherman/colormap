@@ -8,9 +8,10 @@
   <div class="row">
     
     <div class="col-lg-6">
+      <div id="raph-cbar-holder"></div>
       <div id="raph-holder"></div>
       <div id="plot-control-buttons">
-        <span>Bring to Front:</span> 
+        <span>Bring to Front:</span>
         <button id="rfrontbutton" class="movetofront" style="color:red">R</button>
         <button id="gfrontbutton" class="movetofront" style="color:green">G</button>
         <button id="bfrontbutton" class="movetofront" style="color:blue">B</button>
@@ -24,20 +25,25 @@
         <button id="flipbutton"><span class="glyphicon glyphicon-sort" style="color: #555"></span></button>
       </div> 
     </div>
-
-    <div id="raph-cbar-holder" class="col-lg-1"></div>
     
     <div id="dl-sidebar" class="col-lg-4">
-      <p class="lead">Download your colormap</p>
-      <p>Choose N colors </p>
-      <p>Save to Gallery? Name</p>
-      <p>Download Button (.txt)</p>
-      <p>Usage</p>
-<pre>% Matlab
-importdata...
-# Matplotlib
-something else
-</pre>
+      <p class="lead" style="margin-bottom: 10px">Copy your colormap</p>
+      <form class="form-horizontal" style="margin-bottom: 10px">
+        <fieldset>
+          <div class="control-group">
+            <label class="control-label" for="ncolorsinput" style="display: inline-block; font-weight: normal">Number of Colors: </label>
+            <span class="controls">
+              <input id="ncolorsinput" name="ncolors" type="text" maxlength="3" size="3" placeholder="256" value="256" class="form-control input-sm" style="display: inline-block; width: 40px; height: 30px; padding: 3px 7px; margin-left: 3px">
+            </span>
+          </div>
+          <div class="control-group">
+            <label class="control-label" for="colorarea" style="font-weight: normal">Click to copy RGB matrix: </label>
+            <div class="controls">
+              <textarea id="colorarea" name="colorarea" rows="5" class="form-control"></textarea>
+            </div>
+          </div>
+        </fieldset>
+      </form>
     </div>
   </div>
 
@@ -62,9 +68,9 @@ something else
     var Blue = new colormapLine(r, 5, "rgb(0,0,255)");
     var cmapLines = [Red, Green, Blue];
 
-    var cbarW = 50,
-        cbarH = 350,
-        numColors = 175,
+    var cbarW = 450,
+        cbarH = 50,
+        numColors = 150,
         rcbar = Raphael("raph-cbar-holder", cbarW, cbarH);
 
     // Get the colorbar rectangles and set the drag events to update.
@@ -73,9 +79,9 @@ something else
 
     var updateCBar = function() {
 
-      RIV = Red.getIntensityValues(numColors);
-      GIV = Green.getIntensityValues(numColors);
-      BIV = Blue.getIntensityValues(numColors);
+      var RIV = Red.getIntensityValues(numColors);
+      var GIV = Green.getIntensityValues(numColors);
+      var BIV = Blue.getIntensityValues(numColors);
 
       for(var color = 0; color <= numColors; color++) {
           hexcolor = Raphael.rgb(RIV[color], GIV[color], BIV[color]);
@@ -83,12 +89,29 @@ something else
       }
 
       cbarRect.toFront();
-/*      cbarRect.attr({fill: "90-#fff-#f00:20-#000"})
-*/    };
+    };
+
+    var updateColorArea = function() {
+      var cval = $("#ncolorsinput").val();
+      var RIV = Red.getIntensityValues(cval);
+      var GIV = Green.getIntensityValues(cval);
+      var BIV = Blue.getIntensityValues(cval);
+
+      areastring = "[";
+      var colorstring = "";
+      for(var color = 0; color < cval; color++) {
+          colorstring = RIV[color].toString() + "," + GIV[color].toString() + "," + BIV[color].toString() + ";\n";
+          areastring += colorstring;
+      }
+      areastring += "]";
+      $("#colorarea").val(areastring);
+    };
 
     for(var i = 0; i < cmapLines.length; i++) {
       for(var j = 0; j < cmapLines[i].buttons.items.length; j++) {
-        cmapLines[i].buttons.items[j].drag(function (dx,dy) { updateCBar();});
+        cmapLines[i].buttons.items[j].drag(function (dx,dy) { updateCBar(); },
+                                           function(x,y) {},
+                                           function() { updateColorArea(); });
       }
     }
 
@@ -115,6 +138,12 @@ something else
     });
     $("#flipbutton").click(function() {
       flipLine(Red); flipLine(Green); flipLine(Blue);
+    });
+    $("#ncolorsinput").change(function() {
+      if($(this).val() < 2) $(this).val(2);
+      else if($(this).val() > 256) $(this).val(256);
+      else {}
+      updateColorArea();
     });
 
     // Swap two color curves
@@ -144,6 +173,8 @@ something else
       Line1.drawPath();
       updateCBar();
     };
+
+    updateColorArea();
 
   };
 </script>
