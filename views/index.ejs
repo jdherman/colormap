@@ -39,7 +39,7 @@
           <div class="control-group">
             <label class="control-label" for="colorarea" style="font-weight: normal">Click to copy RGB matrix: </label>
             <div class="controls">
-              <textarea id="colorarea" name="colorarea" rows="5" class="form-control"></textarea>
+              <textarea id="colorarea" name="colorarea" rows="6" class="form-control"></textarea>
             </div>
           </div>
         </fieldset>
@@ -100,7 +100,7 @@
       areastring = "[";
       var colorstring = "";
       for(var color = 0; color < cval; color++) {
-          colorstring = RIV[color].toString() + "," + GIV[color].toString() + "," + BIV[color].toString() + ";\n";
+          colorstring = RIV[color].toFixed(4) + "," + GIV[color].toFixed(4) + "," + BIV[color].toFixed(4) + ";\n";
           areastring += colorstring;
       }
       areastring += "]";
@@ -159,6 +159,7 @@
       Line1.drawPath();
       Line2.drawPath();
       updateCBar();
+      updateColorArea();
     };
 
     // Flip a single color curve
@@ -172,6 +173,7 @@
       }
       Line1.drawPath();
       updateCBar();
+      updateColorArea();
     };
 
     updateColorArea();
