@@ -38,7 +38,7 @@ var colormapLine = function (r, numButtons, color) {
 
             tempY = this.attr("cy") + dy - (this.dy || 0);
             if(tempY > H - 10) tempY = H - 10;
-            else if (tempY < 10) tempY = 10;
+            else if (tempY <= 9) tempY = 9;
 
             parent.drawPath();
             this.attr({cy: tempY});
@@ -63,9 +63,9 @@ var colormapLine = function (r, numButtons, color) {
 
         ColorVector = [];
 
-        for(var color = 0; color <= numColors; color++) {
+        for(var color = 0; color < numColors; color++) {
 
-            cx = 10 + (color/numColors)*(440);
+            cx = 10 + (color/(numColors-1))*(440);
 
             for(var j = 0; j < this.buttons.items.length-1; j++) {
 
@@ -75,7 +75,7 @@ var colormapLine = function (r, numButtons, color) {
                 nextButtonX = nextButton.attr('cx');
 
                 // Find the points to interpolate between
-                if(cx >= thisButtonX && cx < nextButtonX) {
+                if(cx >= thisButtonX && cx <= nextButtonX) {
                     thisButtonY = thisButton.attr('cy');
                     nextButtonY = nextButton.attr('cy');
                     cyInterp = thisButtonY + (cx - thisButtonX)/(nextButtonX - thisButtonX)*(nextButtonY - thisButtonY);
@@ -83,7 +83,7 @@ var colormapLine = function (r, numButtons, color) {
                     if(cyInterp > H - 10) cyInterp = H - 10;
                     else if (cyInterp < 10) cyInterp = 10;
 
-                    ColorVector[color] = 255*(1-(cyInterp-10)/(H-20));
+                    ColorVector[color] = Math.round(255*(1-(cyInterp-10)/(H-20)));
                     j = this.buttons.items.length-1; // shitty way to break inner loop but not outer
 
                 } else continue;

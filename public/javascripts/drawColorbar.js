@@ -13,7 +13,7 @@ var initColorbar = function(r, rcbar, numColors, cmapLines) {
 
   colorRects = [];
 
-  for(var color = 0; color <= numColors; color++) {
+  for(var color = 0; color < numColors; color++) {
 
       hexcolor = Raphael.rgb(RIV[color], GIV[color], BIV[color]);
 

@@ -83,7 +83,7 @@
       var GIV = Green.getIntensityValues(numColors);
       var BIV = Blue.getIntensityValues(numColors);
 
-      for(var color = 0; color <= numColors; color++) {
+      for(var color = 0; color < numColors; color++) {
           hexcolor = Raphael.rgb(RIV[color], GIV[color], BIV[color]);
           colorRects[color].attr({fill: hexcolor, "stroke-width": 0});
       }
@@ -100,8 +100,9 @@
       areastring = "[";
       var colorstring = "";
       for(var color = 0; color < cval; color++) {
-          colorstring = RIV[color].toFixed(4) + "," + GIV[color].toFixed(4) + "," + BIV[color].toFixed(4) + ";\n";
+          colorstring = RIV[color] + "," + GIV[color] + "," + BIV[color];
           areastring += colorstring;
+          if(color < cval-1) areastring += ";\n";
       }
       areastring += "]";
       $("#colorarea").val(areastring);
