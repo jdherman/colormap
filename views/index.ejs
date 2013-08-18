@@ -28,19 +28,38 @@
     
     <div id="dl-sidebar" class="col-lg-4">
       <p class="lead" style="margin-bottom: 10px">Copy your colormap</p>
-      <form class="form-horizontal" style="margin-bottom: 10px">
+      <form id="sidebarform" class="form-horizontal" style="margin-bottom: 10px">
         <fieldset>
+
+          <div class="control-group">
+            <div class="controls">
+              <textarea id="colorarea" name="colorarea" rows="6" class="form-control" readonly></textarea>
+            </div>
+          </div>
+
           <div class="control-group">
             <label class="control-label" for="ncolorsinput" style="display: inline-block; font-weight: normal">Number of Colors: </label>
             <span class="controls">
               <input id="ncolorsinput" name="ncolors" type="text" maxlength="3" size="3" placeholder="256" value="256" class="form-control input-sm" style="display: inline-block; width: 40px; height: 30px; padding: 3px 7px; margin-left: 3px">
             </span>
           </div>
+
           <div class="control-group">
-            <label class="control-label" for="colorarea" style="font-weight: normal">Click to copy RGB matrix: </label>
-            <div class="controls">
-              <textarea id="colorarea" name="colorarea" rows="6" class="form-control"></textarea>
-            </div>
+            <label class="control-label" style="display:inline-block; font-weight: normal">Style: </label>
+            <label class="control-label" style="font-weight: normal; margin-right: 6px; margin-left: 6px">
+            <input type="radio" name="mat_or_txt" value="mat" checked=true style="margin-right:4px;">Matrix</label>
+            <label class="control-label" style="font-weight: normal">
+            <input type="radio" name="mat_or_txt" value="txt" style="margin-right:4px;">Plaintext</label>
+          </div>
+
+          <div class="control-group">
+            <label class="control-label" style="display:inline-block; font-weight: normal; padding-top: 0px">Format: </label>
+            <label class="control-label" style="font-weight: normal; margin-right: 6px; margin-left: 6px; padding-top: 0px">
+            <input type="radio" name="colorformat" value="rgb" checked=true style="margin-right:4px;">RGB</label>
+            <label class="control-label" style="font-weight: normal; margin-right: 6px; padding-top: 0px">
+            <input type="radio" name="colorformat" value="cmyk" style="margin-right:4px;">CMYK</label>
+            <label class="control-label" style="font-weight: normal; padding-top: 0px">
+            <input type="radio" name="colorformat" value="hex" style="margin-right:4px;">Hex</label>
           </div>
         </fieldset>
       </form>
@@ -96,15 +115,37 @@
       var RIV = Red.getIntensityValues(cval);
       var GIV = Green.getIntensityValues(cval);
       var BIV = Blue.getIntensityValues(cval);
+      var style = $("input:radio[name=mat_or_txt]:checked").val();
+      var format = $("input:radio[name=colorformat]:checked").val();
+      var inbetween = " ";
+      var endline = "\n";
+      var areastring = "";
+      var cmykcol, hexcol;
 
-      areastring = "[";
+      if(style == "mat"){
+        areastring = "[";
+        inbetween = ",";
+        endline = ";\n";
+        if(format == "hex") endline = ",\n";
+      }
+
       var colorstring = "";
       for(var color = 0; color < cval; color++) {
-          colorstring = RIV[color] + "," + GIV[color] + "," + BIV[color];
+
+          if(format == "rgb")
+            colorstring = RIV[color] + inbetween + GIV[color] + inbetween + BIV[color];
+          else if(format == "cmyk") {
+            cmykcol = rgb2cmyk(RIV[color], GIV[color], BIV[color]);
+            colorstring = cmykcol[0].toFixed(3) + inbetween + cmykcol[1].toFixed(3) + inbetween + cmykcol[2].toFixed(3) + inbetween + cmykcol[3].toFixed(3);
+          } else {
+            hexcol = Raphael.rgb(RIV[color], GIV[color], BIV[color]);
+            colorstring = hexcol;
+          }
           areastring += colorstring;
-          if(color < cval-1) areastring += ";\n";
+          if(color < cval-1) areastring += endline;
       }
-      areastring += "]";
+
+      if(style == "mat") areastring += "]";
       $("#colorarea").val(areastring);
     };
 
@@ -146,6 +187,12 @@
       else {}
       updateColorArea();
     });
+    $("#sidebarform").submit(function(e) {       
+      e.preventDefault();
+    });
+    $("input:radio").change(function() {
+      updateColorArea();
+    });
 
     // Swap two color curves
     var swapLines = function(Line1, Line2) {
@@ -180,5 +227,22 @@
     updateColorArea();
 
   };
+
+function rgb2cmyk(r,g,b) {
+
+ if (r==0 && g==0 && b==0) return [0,0,0,1];
+
+ var computedC = 1 - (r/255);
+ var computedM = 1 - (g/255);
+ var computedY = 1 - (b/255);
+
+ var minCMY = Math.min(computedC, Math.min(computedM,computedY));
+ computedC = (computedC - minCMY) / (1 - minCMY) ;
+ computedM = (computedM - minCMY) / (1 - minCMY) ;
+ computedY = (computedY - minCMY) / (1 - minCMY) ;
+ var computedK = minCMY;
+
+ return [computedC,computedM,computedY,computedK];
+}
 </script>
     
