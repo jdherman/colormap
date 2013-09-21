@@ -63,6 +63,15 @@
           </div>
         </fieldset>
       </form>
+<pre style="text-align:left; font-size:11px">
+% Usage: ("A" is color matrix)
+colormap(A/255); % in matlab
+
+import matplotlib as mpl # in python
+cm = mpl.colors.ListedColormap(A/255)
+imshow(..., cmap=cm) # for example
+</pre>
+
     </div>
   </div>
 
