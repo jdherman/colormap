@@ -1,0 +1,1 @@
+Code for colormap website [(http://colormap.org)](http://colormap.org).
