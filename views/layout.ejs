@@ -6,17 +6,17 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Colormap</title>
+    <title>Custom colormaps for Matlab and Matplotlib - Colormap.org</title>
 
     <!-- Bootstrap core CSS -->
     <link href="stylesheets/bootstrap.min.css" rel="stylesheet">
-
+<!--     <link href="stylesheets/sticky-footer-navbar.css" rel="stylesheet">
+ -->
     <!-- Custom styles for this template -->
-    <link href="stylesheets/sticky-footer-navbar.css" rel="stylesheet">
     <link href="stylesheets/colormap.css" rel="stylesheet">
     <link href="stylesheets/glyphicons/css/bootstrap-glyphicons.css" rel="stylesheet">
     <link href='http://fonts.googleapis.com/css?family=Raleway:400,200' rel='stylesheet' type='text/css'>
-
+    <link rel="icon" href="images/favicon.ico" type="image/x-icon" />
   </head>
 
   <body>
@@ -25,20 +25,20 @@
     <div id="wrap">
 
       <!-- Fixed navbar -->
-      <div class="navbar navbar-fixed-top">
+      <div class="navbar">
         <div class="container">
-          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <!-- <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
-          </button>
+          </button> -->
           <a class="navbar-brand" href="/">COLORMAP</a>
-          <div class="nav-collapse collapse">
+<!--           <div class="nav-collapse collapse">
             <ul class="nav navbar-nav">
               <li><a href="/gallery">GALLERY</a></li>
               <li><a href="/about">ABOUT</a></li>
               <li><a href="/contact">CONTACT</a></li>
-              <!-- <li class="dropdown">
+              <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
                 <ul class="dropdown-menu">
                   <li><a href="#">Action</a></li>
@@ -49,19 +49,21 @@
                   <li><a href="#">Separated link</a></li>
                   <li><a href="#">One more separated link</a></li>
                 </ul>
-              </li> -->
+              </li>
             </ul>
-          </div><!--/.nav-collapse -->
+          </div> -->
         </div>
       </div>
 
       <!-- Begin page content -->
       <%- body %>
+
+    <div id="push" style="height:55px"></div>
     </div>
 
-    <div id="footer">
+    <div id="footer" class="navbar navbar-fixed-bottom">
       <div class="container">
-        <p class="text-muted credit">Made with <a target="_blank" href="http://nodejs.org/">Node.js</a> and <a target="_blank" href="http://raphaeljs.com/">Raphaël.js</a>.</p>
+        <p class="text-muted credit" style="margin-bottom:0px">Made with <a target="_blank" href="http://nodejs.org/">Node.js</a> and <a target="_blank" href="http://raphaeljs.com/">Raphaël.js</a>.</p>
       </div>
     </div>
 

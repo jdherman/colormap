@@ -2,9 +2,8 @@
 
 <!-- Begin page content -->
 <div class="container">
-  <br/>
   <p class="lead">Create a custom colormap by dragging points on the RGB intensity curves.</p>
-  
+
   <div class="row">
     
     <div class="col-lg-6">
@@ -64,16 +63,32 @@
         </fieldset>
       </form>
 <pre style="text-align:left; font-size:11px">
-% Usage: ("A" is color matrix)
-colormap(A/255); % in matlab
+% Usage: ("C" is color matrix)
+colormap(C/255); % in matlab
 
 import matplotlib as mpl # in python
-cm = mpl.colors.ListedColormap(A/255)
+cm = mpl.colors.ListedColormap(C/255)
 imshow(..., cmap=cm) # for example
 </pre>
 
     </div>
   </div>
+
+  <br/>
+  <p class="lead" style="margin-bottom:10px">Or, copy a 256-color preset:</p>
+
+  <div class="row">
+    <div class="col-lg-1"></div>
+    <div class="col-lg-11">
+      <% for(var i=0; i<presets.length; i++) { %>
+      <img id="<%= presets[i] %>" class="preset-download-link" src='images/<%= presets[i] %>_256_rgb.png' width="250"/>
+      <span class="preset-label"><%= presets[i] %></span>
+      <% if(i%2 != 0) { %><br/> <% } %>
+      <% } %>
+    </div>
+  </div>
+
+
 
 </div>
 
@@ -201,6 +216,9 @@ imshow(..., cmap=cm) # for example
     });
     $("input:radio").change(function() {
       updateColorArea();
+    });
+    $("img.preset-download-link").click(function() {
+      window.location = "/gallery/" + $(this).attr('id') + "_256_rgb.txt";
     });
 
     // Swap two color curves
