@@ -1,4 +1,4 @@
-var colormapLine = function (r, numButtons, color) {
+var colormapLine = function (r, numButtons, color, defaults) {
     
     var W = r.width,
         H = r.height;
@@ -19,7 +19,9 @@ var colormapLine = function (r, numButtons, color) {
     for (i = 0; i < numButtons; i++) {
         
         startX = 10 + (W-20) / (numButtons - 1) * i;
-        startY = H - 10 - (H - 20) / 100 * (100/(i+1));
+        if(typeof defaults === "undefined")
+            startY = H - 10 - (H - 20) / 100 * (100/(i+1));
+        else startY = defaults[i];
         
         this.buttons.push(r.circle(startX, startY, 5).attr({fill: color, stroke: "none"}));
         var parent = this;

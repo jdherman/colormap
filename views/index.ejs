@@ -106,9 +106,9 @@ imshow(..., cmap=cm) # for example
     gridp = "M120,0L120,350M230,0L230,350M340,0L340,350M5,88L455,88M5,175L455,175M5,263L455,263"
     gridPath = r.path(gridp).attr({stroke: '#bbb'});
 
-    var Red = new colormapLine(r, 5, "rgb(255,0,0)");
-    var Green = new colormapLine(r, 5, "rgb(0,255,0)");
-    var Blue = new colormapLine(r, 5, "rgb(0,0,255)");
+    var Red = new colormapLine(r, 5, "rgb(255,0,0)", [10,10,10,180,340]);
+    var Green = new colormapLine(r, 5, "rgb(0,255,0)", [10,10,180,340,340]);
+    var Blue = new colormapLine(r, 5, "rgb(0,0,255)", [10,180,340,340,340]);
     var cmapLines = [Red, Green, Blue];
 
     var cbarW = 450,
