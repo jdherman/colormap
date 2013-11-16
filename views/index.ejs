@@ -178,11 +178,15 @@ imshow(..., cmap=cm) # for example
     var updateLumiLine = function() {
       var avg = 0;
       var p = "M";
-      var xpts = [0, 120, 230, 340, 460];
+      var adjust = 0;
       for (var i = 0; i < 5; i++) {
           avg = (Red.buttons.items[i].attr('cy') + Green.buttons.items[i].attr('cy') + Blue.buttons.items[i].attr('cy'))/3;
           if(i > 0) p += "L";
-          p = p + [xpts, avg];
+
+          if(i==0) adjust = -10;
+          else if(i==4) adjust = 10;
+          else adjust = 0;
+          p = p + [Red.buttons.items[i].attr('cx') + adjust, avg];
       }
       Gray.attr({path: p});
     };
