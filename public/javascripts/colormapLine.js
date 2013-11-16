@@ -10,9 +10,9 @@ var colormapLine = function (r, numButtons, color, defaults) {
             p = p + [this.buttons.items[i].attr('cx'), this.buttons.items[i].attr('cy')];
         }
         this.path.attr({path: p});
-    }
+    };
     
-    this.buttons = r.set(),
+    this.buttons = r.set();
     this.path = r.path().attr({stroke: color, "stroke-width": 2});
     var isDragging = false;
 
@@ -45,7 +45,7 @@ var colormapLine = function (r, numButtons, color, defaults) {
             parent.drawPath();
             this.attr({cy: tempY});
             this.dx = dx;
-            this.dy = dy;   
+            this.dy = dy; 
             r.safari();
 
         }, function () {
@@ -93,5 +93,5 @@ var colormapLine = function (r, numButtons, color, defaults) {
         }
 
         return ColorVector; // a numColors size vector of RGB values (one of the three)
-    }
+    };
 };
