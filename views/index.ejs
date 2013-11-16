@@ -111,7 +111,7 @@ imshow(..., cmap=cm) # for example
     var Blue = new colormapLine(r, 5, "rgb(0,0,255)", [10,10,10,180,340]);
     var cmapLines = [Red, Green, Blue];
 
-    Gray = r.path("M10,0L120,0L230,0L340,0L450,0").attr({stroke: '#d5d5d5', 'stroke-width': 4});
+    Gray = r.path("M0,0L120,0L230,0L340,0L460,0").attr({stroke: '#d5d5d5', 'stroke-width': 4});
 
     var cbarW = 450,
         cbarH = 50,
@@ -178,12 +178,13 @@ imshow(..., cmap=cm) # for example
     var updateLumiLine = function() {
       var avg = 0;
       var p = "M";
-        for (var i = 0; i < 5; i++) {
-            avg = (Red.buttons.items[i].attr('cy') + Green.buttons.items[i].attr('cy') + Blue.buttons.items[i].attr('cy'))/3;
-            if(i > 0) p += "L";
-            p = p + [Red.buttons.items[i].attr('cx'), avg];
-        }
-        Gray.attr({path: p});
+      var xpts = [0, 120, 230, 340, 460];
+      for (var i = 0; i < 5; i++) {
+          avg = (Red.buttons.items[i].attr('cy') + Green.buttons.items[i].attr('cy') + Blue.buttons.items[i].attr('cy'))/3;
+          if(i > 0) p += "L";
+          p = p + [xpts, avg];
+      }
+      Gray.attr({path: p});
     };
 
     for(var i = 0; i < cmapLines.length; i++) {
