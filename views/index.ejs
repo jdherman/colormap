@@ -112,10 +112,6 @@ imshow(..., cmap=cm) # for example
     var cmapLines = [Red, Green, Blue];
 
     var Gray = r.path("M10,0L120,0L230,0L340,0L450,0").attr({stroke: '#ddd', 'stroke-width': 2});
-    updateLumiLine();
-    $("#rfrontbutton").click();
-    $("#gfrontbutton").click();
-    $("#bfrontbutton").click();
 
     var cbarW = 450,
         cbarH = 50,
@@ -192,7 +188,7 @@ imshow(..., cmap=cm) # for example
 
     for(var i = 0; i < cmapLines.length; i++) {
       for(var j = 0; j < cmapLines[i].buttons.items.length; j++) {
-        cmapLines[i].buttons.items[j].drag(function (dx,dy) { updateCBar(); },
+        cmapLines[i].buttons.items[j].drag(function (dx,dy) { updateCBar(); updateLumiLine()},
                                            function(x,y) {},
                                            function() { updateColorArea(); });
       }
@@ -269,6 +265,10 @@ imshow(..., cmap=cm) # for example
     };
 
     updateColorArea();
+    updateLumiLine();
+    $("#rfrontbutton").click();
+    $("#gfrontbutton").click();
+    $("#bfrontbutton").click();
 
   };
 
