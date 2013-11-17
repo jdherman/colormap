@@ -183,8 +183,8 @@ imshow(..., cmap=cm) # for example
           avg = (Red.buttons.items[i].attr('cy') + Green.buttons.items[i].attr('cy') + Blue.buttons.items[i].attr('cy'))/3;
           if(i > 0) p += "L";
 
-          if(i==0) adjust = -10;
-          else if(i==4) adjust = 10;
+          if(i==0) adjust = -5;
+          else if(i==4) adjust = 5;
           else adjust = 0;
           p = p + [Red.buttons.items[i].attr('cx') + adjust, avg];
       }
