@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Custom colormaps for Matlab and Matplotlib - Colormap.org</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="stylesheets/bootstrap.min.css" rel="stylesheet">
+<!--     <link href="stylesheets/sticky-footer-navbar.css" rel="stylesheet">
+ -->
+    <!-- Custom styles for this template -->
+    <link href="stylesheets/colormap.css" rel="stylesheet">
+    <link href="stylesheets/glyphicons/css/bootstrap-glyphicons.css" rel="stylesheet">
+    <link href='http://fonts.googleapis.com/css?family=Raleway:400,200' rel='stylesheet' type='text/css'>
+    <link rel="icon" href="images/favicon.ico" type="image/x-icon" />
+  </head>
+
+  <body>
+
+    <!-- Wrap all page content here -->
+    <div id="wrap">
+
+      <!-- Fixed navbar -->
+      <div class="navbar">
+        <div class="container">
+          <!-- <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button> -->
+          <a class="navbar-brand" href="/">COLORMAP</a>
+<!--           <div class="nav-collapse collapse">
+            <ul class="nav navbar-nav">
+              <li><a href="/gallery">GALLERY</a></li>
+              <li><a href="/about">ABOUT</a></li>
+              <li><a href="/contact">CONTACT</a></li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <li><a href="#">Action</a></li>
+                  <li><a href="#">Another action</a></li>
+                  <li><a href="#">Something else here</a></li>
+                  <li class="divider"></li>
+                  <li class="nav-header">Nav header</li>
+                  <li><a href="#">Separated link</a></li>
+                  <li><a href="#">One more separated link</a></li>
+                </ul>
+              </li>
+            </ul>
+          </div> -->
+        </div>
+      </div>
+
+      <!-- Begin page content -->
+      
+<!-- Begin page content -->
+<div class="container">
+  <p class="lead">Create a custom colormap by dragging points on the RGB intensity curves.</p>
+
+  <div class="row">
+    
+    <div class="col-lg-6">
+      <div id="raph-cbar-holder"></div>
+      <div id="raph-holder"></div>
+      <div id="plot-control-buttons">
+        <span>Bring to Front:</span>
+        <button id="rfrontbutton" class="movetofront" style="color:red">R</button>
+        <button id="gfrontbutton" class="movetofront" style="color:green">G</button>
+        <button id="bfrontbutton" class="movetofront" style="color:blue">B</button>
+
+        <span style="margin-left:12px">Swap:</span>
+        <button id="rgswapbutton" class="swap"><span style="color:red">R</span><span style="color:green">G</span></button>
+        <button id="rbswapbutton" class="swap"><span style="color:red">R</span><span style="color:blue">B</span></button>
+        <button id="gbswapbutton" class="swap"><span style="color:green">G</span><span style="color:blue">B</span></button>
+
+        <span style="margin-left:12px">Flip:</span>
+        <button id="flipbutton"><span class="glyphicon glyphicon-sort" style="color: #555"></span></button>
+      </div> 
+    </div>
+    
+    <div id="dl-sidebar" class="col-lg-4">
+      <p class="lead" style="margin-bottom: 10px">Copy your colormap</p>
+      <form id="sidebarform" class="form-horizontal" style="margin-bottom: 10px">
+        <fieldset>
+
+          <div class="control-group">
+            <div class="controls">
+              <textarea id="colorarea" name="colorarea" rows="6" class="form-control" readonly></textarea>
+            </div>
+          </div>
+
+          <div class="control-group">
+            <label class="control-label" for="ncolorsinput" style="display: inline-block; font-weight: normal">Number of Colors: </label>
+            <span class="controls">
+              <input id="ncolorsinput" name="ncolors" type="text" maxlength="3" size="3" placeholder="256" value="256" class="form-control input-sm" style="display: inline-block; width: 40px; height: 30px; padding: 3px 7px; margin-left: 3px">
+            </span>
+          </div>
+
+          <div class="control-group">
+            <label class="control-label" style="display:inline-block; font-weight: normal">Style: </label>
+            <label class="control-label" style="font-weight: normal; margin-right: 6px; margin-left: 6px">
+            <input type="radio" name="mat_or_txt" value="mat" checked=true style="margin-right:4px;">Matrix</label>
+            <label class="control-label" style="font-weight: normal">
+            <input type="radio" name="mat_or_txt" value="txt" style="margin-right:4px;">Plaintext</label>
+          </div>
+
+          <div class="control-group">
+            <label class="control-label" style="display:inline-block; font-weight: normal; padding-top: 0px">Format: </label>
+            <label class="control-label" style="font-weight: normal; margin-right: 6px; margin-left: 6px; padding-top: 0px">
+            <input type="radio" name="colorformat" value="rgb" checked=true style="margin-right:4px;">RGB</label>
+            <label class="control-label" style="font-weight: normal; margin-right: 6px; padding-top: 0px">
+            <input type="radio" name="colorformat" value="cmyk" style="margin-right:4px;">CMYK</label>
+            <label class="control-label" style="font-weight: normal; padding-top: 0px">
+            <input type="radio" name="colorformat" value="hex" style="margin-right:4px;">Hex</label>
+          </div>
+        </fieldset>
+      </form>
+<pre style="text-align:left; font-size:11px">
+% Usage: ("C" is color matrix)
+colormap(C/255); % in matlab
+
+import matplotlib as mpl # in python
+cm = mpl.colors.ListedColormap(C/255)
+imshow(..., cmap=cm) # for example
+</pre>
+
+    </div>
+  </div>
+
+  <br/>
+  <p class="lead" style="margin-bottom:10px">Or, copy a 256-color preset:</p>
+
+  <div class="row">
+    <div class="col-lg-1"></div>
+    <div class="col-lg-11">
+      
+      <img id="blues" class="preset-download-link" src='images/blues_256_rgb.png' width="250"/>
+      <span class="preset-label">blues</span>
+      
+      
+      <img id="dawn" class="preset-download-link" src='images/dawn_256_rgb.png' width="250"/>
+      <span class="preset-label">dawn</span>
+      <br/> 
+      
+      <img id="dusk" class="preset-download-link" src='images/dusk_256_rgb.png' width="250"/>
+      <span class="preset-label">dusk</span>
+      
+      
+      <img id="fire" class="preset-download-link" src='images/fire_256_rgb.png' width="250"/>
+      <span class="preset-label">fire</span>
+      <br/> 
+      
+      <img id="golds" class="preset-download-link" src='images/golds_256_rgb.png' width="250"/>
+      <span class="preset-label">golds</span>
+      
+      
+      <img id="grays" class="preset-download-link" src='images/grays_256_rgb.png' width="250"/>
+      <span class="preset-label">grays</span>
+      <br/> 
+      
+      <img id="greens" class="preset-download-link" src='images/greens_256_rgb.png' width="250"/>
+      <span class="preset-label">greens</span>
+      
+      
+      <img id="ice" class="preset-download-link" src='images/ice_256_rgb.png' width="250"/>
+      <span class="preset-label">ice</span>
+      <br/> 
+      
+      <img id="kryptonite" class="preset-download-link" src='images/kryptonite_256_rgb.png' width="250"/>
+      <span class="preset-label">kryptonite</span>
+      
+      
+      <img id="purples" class="preset-download-link" src='images/purples_256_rgb.png' width="250"/>
+      <span class="preset-label">purples</span>
+      <br/> 
+      
+      <img id="redblue" class="preset-download-link" src='images/redblue_256_rgb.png' width="250"/>
+      <span class="preset-label">redblue</span>
+      
+      
+      <img id="reds" class="preset-download-link" src='images/reds_256_rgb.png' width="250"/>
+      <span class="preset-label">reds</span>
+      <br/> 
+      
+      <img id="seashore" class="preset-download-link" src='images/seashore_256_rgb.png' width="250"/>
+      <span class="preset-label">seashore</span>
+      
+      
+      <img id="teals" class="preset-download-link" src='images/teals_256_rgb.png' width="250"/>
+      <span class="preset-label">teals</span>
+      <br/> 
+      
+    </div>
+  </div>
+
+
+
+</div>
+
+<script src="javascripts/colormapLine.js"></script>
+<script src="javascripts/drawColorbar.js"></script>
+<script>
+  window.onload = function() {
+    // Configure and create Raphael object
+    var W = 460,
+        H = 350,
+        r = Raphael("raph-holder", W, H);
+
+    graph = r.rect(5, 0, 450, H, 10).attr({fill: '#eee', stroke: '#999', 'stroke-width': 1});
+
+    gridp = "M120,0L120,350M230,0L230,350M340,0L340,350M5,88L455,88M5,175L455,175M5,263L455,263"
+    gridPath = r.path(gridp).attr({stroke: '#bbb'});
+
+    var Red = new colormapLine(r, 5, "rgb(255,0,0)", [10,180,340,340,340]);
+    var Green = new colormapLine(r, 5, "rgb(0,255,0)", [10,10,180,340,340]);
+    var Blue = new colormapLine(r, 5, "rgb(0,0,255)", [10,10,10,180,340]);
+    var cmapLines = [Red, Green, Blue];
+
+    Gray = r.path("M0,0L120,0L230,0L340,0L460,0").attr({stroke: '#d5d5d5', 'stroke-width': 4});
+
+    var cbarW = 450,
+        cbarH = 50,
+        numColors = 150,
+        rcbar = Raphael("raph-cbar-holder", cbarW, cbarH);
+
+    // Get the colorbar rectangles and set the drag events to update.
+    var colorRects = initColorbar(r, rcbar, numColors, cmapLines);
+    cbarRect = rcbar.rect(0,0,cbarW,cbarH).attr({stroke: '#666'});
+
+    var updateCBar = function() {
+
+      var RIV = Red.getIntensityValues(numColors);
+      var GIV = Green.getIntensityValues(numColors);
+      var BIV = Blue.getIntensityValues(numColors);
+
+      for(var color = 0; color < numColors; color++) {
+          hexcolor = Raphael.rgb(RIV[color], GIV[color], BIV[color]);
+          colorRects[color].attr({fill: hexcolor, "stroke-width": 0});
+      }
+
+      cbarRect.toFront();
+    };
+
+    var updateColorArea = function() {
+      var cval = $("#ncolorsinput").val();
+      var RIV = Red.getIntensityValues(cval);
+      var GIV = Green.getIntensityValues(cval);
+      var BIV = Blue.getIntensityValues(cval);
+      var style = $("input:radio[name=mat_or_txt]:checked").val();
+      var format = $("input:radio[name=colorformat]:checked").val();
+      var inbetween = " ";
+      var endline = "\n";
+      var areastring = "";
+      var cmykcol, hexcol;
+
+      if(style == "mat"){
+        areastring = "[";
+        inbetween = ",";
+        endline = ";\n";
+        if(format == "hex") endline = ",\n";
+      }
+
+      var colorstring = "";
+      for(var color = 0; color < cval; color++) {
+
+          if(format == "rgb")
+            colorstring = RIV[color] + inbetween + GIV[color] + inbetween + BIV[color];
+          else if(format == "cmyk") {
+            cmykcol = rgb2cmyk(RIV[color], GIV[color], BIV[color]);
+            colorstring = cmykcol[0].toFixed(3) + inbetween + cmykcol[1].toFixed(3) + inbetween + cmykcol[2].toFixed(3) + inbetween + cmykcol[3].toFixed(3);
+          } else {
+            hexcol = Raphael.rgb(RIV[color], GIV[color], BIV[color]);
+            colorstring = hexcol;
+          }
+          areastring += colorstring;
+          if(color < cval-1) areastring += endline;
+      }
+
+      if(style == "mat") areastring += "]";
+      $("#colorarea").val(areastring);
+    };
+
+    var updateLumiLine = function() {
+      var avg = 0;
+      var p = "M";
+      var adjust = 0;
+      for (var i = 0; i < 5; i++) {
+          avg = (Red.buttons.items[i].attr('cy') + Green.buttons.items[i].attr('cy') + Blue.buttons.items[i].attr('cy'))/3;
+          if(i > 0) p += "L";
+
+          if(i==0) adjust = -5;
+          else if(i==4) adjust = 5;
+          else adjust = 0;
+          p = p + [Red.buttons.items[i].attr('cx') + adjust, avg];
+      }
+      Gray.attr({path: p});
+    };
+
+    for(var i = 0; i < cmapLines.length; i++) {
+      for(var j = 0; j < cmapLines[i].buttons.items.length; j++) {
+        cmapLines[i].buttons.items[j].drag(function (dx,dy) { updateCBar(); updateLumiLine()},
+                                           function(x,y) {},
+                                           function() { updateColorArea(); });
+      }
+    }
+
+    $("#rfrontbutton").click(function(){
+      Red.buttons.toFront();
+      Red.path.toFront();
+    });
+    $("#gfrontbutton").click(function(){
+      Green.buttons.toFront();
+      Green.path.toFront();
+    });
+    $("#bfrontbutton").click(function(){
+      Blue.buttons.toFront();
+      Blue.path.toFront();
+    });
+    $("#rgswapbutton").click(function() {
+      swapLines(Red, Green);
+    });
+    $("#rbswapbutton").click(function() {
+      swapLines(Red, Blue);
+    });
+    $("#gbswapbutton").click(function() {
+      swapLines(Green, Blue);
+    });
+    $("#flipbutton").click(function() {
+      flipLine(Red); flipLine(Green); flipLine(Blue);
+    });
+    $("#ncolorsinput").change(function() {
+      if($(this).val() < 2) $(this).val(2);
+      else if($(this).val() > 256) $(this).val(256);
+      else {}
+      updateColorArea();
+    });
+    $("#sidebarform").submit(function(e) {       
+      e.preventDefault();
+    });
+    $("input:radio").change(function() {
+      updateColorArea();
+    });
+    $("img.preset-download-link").click(function() {
+      window.location = "/gallery/" + $(this).attr('id') + "_256_rgb.txt";
+    });
+
+    // Swap two color curves
+    var swapLines = function(Line1, Line2) {
+  
+      var tempVal = 0;
+      for(var i = 0; i < Line1.buttons.items.length; i++) {
+        tempVal = Line1.buttons.items[i].attr('cy');
+        Line1.buttons.items[i].attr({cy: Line2.buttons.items[i].attr('cy')})
+        Line2.buttons.items[i].attr({cy: tempVal});
+      }
+
+      Line1.drawPath();
+      Line2.drawPath();
+      updateCBar();
+      updateColorArea();
+    };
+
+    // Flip a single color curve
+    var flipLine = function(Line1) {
+      var tempVal = 0;
+      var endIdx = Line1.buttons.items.length-1;
+      for(var i = 0; i < endIdx/2; i++) {
+        tempVal = Line1.buttons.items[i].attr('cy');
+        Line1.buttons.items[i].attr({cy: Line1.buttons.items[endIdx-i].attr('cy')})
+        Line1.buttons.items[endIdx-i].attr({cy: tempVal});
+      }
+      Line1.drawPath();
+      updateCBar();
+      updateColorArea();
+    };
+
+    updateColorArea();
+    updateLumiLine();
+    $("#rfrontbutton").click();
+    $("#gfrontbutton").click();
+    $("#bfrontbutton").click();
+
+  };
+
+function rgb2cmyk(r,g,b) {
+
+ if (r==0 && g==0 && b==0) return [0,0,0,1];
+
+ var computedC = 1 - (r/255);
+ var computedM = 1 - (g/255);
+ var computedY = 1 - (b/255);
+
+ var minCMY = Math.min(computedC, Math.min(computedM,computedY));
+ computedC = (computedC - minCMY) / (1 - minCMY) ;
+ computedM = (computedM - minCMY) / (1 - minCMY) ;
+ computedY = (computedY - minCMY) / (1 - minCMY) ;
+ var computedK = minCMY;
+
+ return [computedC,computedM,computedY,computedK];
+}
+</script>
+    
+
+    <div id="push" style="height:55px"></div>
+    </div>
+
+    <div id="footer" class="navbar navbar-fixed-bottom">
+      <div class="container">
+        <p class="text-muted credit" style="margin-bottom:0px">Made with <a target="_blank" href="http://nodejs.org/">Node.js</a> and <a target="_blank" href="http://raphaeljs.com/">Raphaël.js</a>. Source on <a target="_blank" href="https://github.com/jdherman/colormap">Github</a>.</p>
+      </div>
+    </div>
+
+
+    <!-- JavaScript plugins (requires jQuery) -->
+    <script src="http://code.jquery.com/jquery.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="javascripts/bootstrap.min.js"></script>
+    <script src='http://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js'></script>
+
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-10257113-8']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+
+  </body>
+</html>
