@@ -1,5 +1,5 @@
 body {
-  background: url('images/cream_dust.png') repeat;
+  background: url('../images/cream_dust.png') repeat;
   font-family: 'Raleway', sans-serif;
 }
 
@@ -9,7 +9,7 @@ a {
 
 .navbar {
   background: #eee;
-  background: url('images/light_noise_diagonal.png') repeat;
+  background: url('../images/light_noise_diagonal.png') repeat;
   border-bottom: 1px solid #dedede;
 }
 
@@ -35,7 +35,7 @@ a {
 
 #dl-sidebar {
   background: #eee;
-  background: url('images/light_noise_diagonal.png') repeat;
+  background: url('../images/light_noise_diagonal.png') repeat;
   border: 1px solid #999;
   -moz-border-radius: 10px;
   border-radius: 10px;
@@ -66,7 +66,7 @@ code {
 }
 
 #footer {
-  background: url('images/light_noise_diagonal.png') repeat;
+  background: url('../images/light_noise_diagonal.png') repeat;
   border-top: 1px solid #dadada;
   padding-top:10px;
   height:40px;
