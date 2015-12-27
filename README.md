@@ -1,1 +1,1 @@
-Code for colormap website [(http://colormap.org)](http://colormap.org).
+Code for colormap website [(http://jdherman.github.io/colormap)](http://jdherman.github.io/colormap).
