@@ -124,8 +124,8 @@
 colormap(C/255); % in matlab
 
 import matplotlib as mpl # in python
-cm = mpl.colors.ListedColormap(C/255)
-imshow(..., cmap=cm) # for example
+cm = mpl.colors.ListedColormap(C/255.0)
+plt.imshow(..., cmap=cm) # for example
 </pre>
 
     </div>
